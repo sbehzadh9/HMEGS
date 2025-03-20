@@ -1,0 +1,5 @@
+v02 - version 0.2
+
+- fixed bug on non compact low-res premarker map.
+- EdgeMarkFillPlus now possible on grayscale images.
+- MR_EdgeMarkFill now possible on single-band low-res input.
