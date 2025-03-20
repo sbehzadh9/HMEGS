@@ -78,8 +78,8 @@ for i = 1:numel(imageFiles)
 
     % Additional segmentation methods
     EMF_plus = EdgeMarkFillPlus(f_ori, 3, 100,r_g);
-    ProposedSoltion1 = EdgeMarkFillPlusv1(f_ori, 3, 100, r_g, AmrSeeds);
-    ProposedSoltion2 = EdgeMarkFillPlusv2(f_ori, 3, 100, r_g, AmrSeeds);
+    ProposedSoltion1 = solution1(f_ori, 3, 100, r_g, AmrSeeds);
+    ProposedSoltion2 = solution2(f_ori, 3, 100, r_g, AmrSeeds);
 
     
     % Save Original Image figure

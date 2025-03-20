@@ -1,4 +1,4 @@
-function tmpDem = EdgeMarkFillPlus(x, eps, perc,amr,AmrSeed)
+function tmpDem = Solution1(x, eps, perc,amr,AmrSeed)
 % function y = EdgeMarkFillPlus(x, eps, perc)
 % Performs the Edge, Mark and Fill Plus segmentation of a N-channel image.
 % x     - source image
@@ -37,45 +37,6 @@ EmforAmr=or(morphoMarkersEmf,morphoMarkersAmr);
 EmforAmrOpen=imopen(EmforAmr,SE);
 MarkerFinal=or(AmrSeed,EmforAmrOpen);
 
-% 
-% subplot(2,4,1);
-% imshow(img);
-% title('Source Image');
-% 
-% 
-% subplot(2,4,2);
-% imshow(morphoMarkersAmr);
-% title('morphology Markers Emf By Amr(A)');
-% 
-% subplot(2,4,3);
-% imshow(morphoMarkersEmf);
-% title('morphology Markers Emf(B)');
-% 
-% 
-% 
-% subplot(2,4,4);
-% imshow(AmrSeed0);
-% title('marker From Amr Result (C)');
-% 
-% subplot(2,4,5);
-% imshow(EmforAmr);
-% title('AB =or(A,B)');
-% 
-% subplot(2,4,6);
-% imshow(EmforAmrOpen);
-% title('AB2 = imopen(AB,SE)');
-% 
-% 
-% subplot(2,4,7);
-% imshow(AmrSeed);
-% title('C2 = imdilate(C, SE)');
-% 
-% 
-% subplot(2,4,8);
-% imshow(MarkerFinal);
-% title('F = or(AB2,C2)');
-% 
-
 % Step1
 tmp = not(imdilate(edg,ones(1)));
 preMarkers = ShedfitErosion(tmp, bwlabel(edgamr), 1);
@@ -88,5 +49,7 @@ tmpMarkers = max(max(bwlabel(preMarkers))).*(tmpMarkers>0) + ...
     tmpMarkers + bwlabel(preMarkers .* (mseimg <= MSEth));
 
 spectralMarkers = ShedfitErosion(demamr, tmpMarkers, 1);
+
+
 tmpDem = imimposemin(demamr,or(MarkerFinal,spectralMarkers));
 tmpDem(tmpDem == -inf) = min(demamr(:)); %replace -inf for compatibility

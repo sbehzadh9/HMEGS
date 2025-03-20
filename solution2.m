@@ -1,4 +1,4 @@
-function tmpDem = EdgeMarkFillPlusv1(x, eps, perc,amrGradian,AmrSeed)
+function tmpDem = Solution2(x, eps, perc,amrGradian,AmrSeed)
 % function y = EdgeMarkFillPlus(x, eps, perc)
 % x     - source image
 % eps   - margin for morphological marker seed dilation (def. 3)
@@ -16,8 +16,7 @@ edg = edgeMS(x);
  edgamr = edgeMS(amrGradian);
  distancePaddedamr = bwdist(edgamr);
  demAmr = double(-distancePaddedamr);
- 
-% Computing Spectral Markers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Computing Spectral Markers
 % 2-step process:
 % - compute pre-markers by dilating contours, isolating connected
 % components and performing a first SFE for consistency
@@ -36,22 +35,6 @@ tmpMarkers = MarkerSegmentation(x, ...
 tmpMarkers = max(max(bwlabel(preMarkers))).*(tmpMarkers>0) + ...
     tmpMarkers + bwlabel(preMarkers .* (mseimg <= MSEth));
 
-subplot(1,3,1);
-imshow(img);
-title('Source Image');
-
-
-subplot(1,3,2);
-imshow(AmrSeed);
-title('AmrSeed Markers Emf By Amr(A)');
-
-subplot(1,3,3);
-imshow(morphoMarkersEmf);
-title('morphology Markers Emf(B)');
-
 spectralMarkers = ShedfitErosion(demAmr, tmpMarkers, 1);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tmpDem = imimposemin(demAmr,or(AmrSeed,spectralMarkers));
 tmpDem(tmpDem == -inf) = min(demAmr(:)); %replace -inf for compatibility
-
