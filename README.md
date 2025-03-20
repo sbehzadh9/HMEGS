@@ -13,6 +13,10 @@ myresult/      # Saves final segmentation outputs
 code/          # Contains utility functions and segmentation algorithms
 ```
 
+## Dataset
+The BSDS500 dataset is used in this project. The dataset can be accessed from:
+[BSDS500 dataset]([https://example.com/docs](https://github.com/seyed-mohammadreza-mousavi/HMEGS-BSDS500-Dataset/tree/main))
+
 ## Usage
 1. Place input images in the `images/` folder.
 2. Place ground truth files in `groundTruth/`.
